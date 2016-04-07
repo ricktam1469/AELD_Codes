@@ -8,7 +8,7 @@ using namespace std;
 #include <systemc.h>
 #include "lp.hpp"
 
-loadProgram::loadProgram(){
+void loadProgram::fileReading(){
 
 file.open("ASCII_File.asm", ios::in);
 		string fileLine;

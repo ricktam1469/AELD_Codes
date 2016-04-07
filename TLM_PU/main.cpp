@@ -8,44 +8,64 @@
 #include "ALU.hpp"
 #include "reg.hpp"
 #include "lp.hpp"
-#include "combiner.hpp"
+
 using namespace std;
-Combiner *c;
-Register reg;
+
 /*
  * Calling all functions in main and File Handling
  *
  */
-int sc_main(int argc, char **argsfile)
-{
+SC_MODULE(SYSTEM){
+ALU *alu1;
+loadProgram *lp;
 
-	//sys=new SYSTEM("sys");
-	c=new Combiner("combiner");
+sc_clock clksig;
+sc_signal < bool > inp_vldsig;
+sc_signal < bool > inp_rdysig;
 
-	cout<<"\n\t WELCOME TO RK ALU "<<endl;
-	cout<<"\t ^^^^^^^ ^^ ^^ ^^^ "<<endl<<endl;		
+
+
+sc_signal < Operation  > inp1_sig;
+sc_signal < int* > inp2_sig;
+sc_signal < int* > inp3_sig;
+
+
+	SC_CTOR(SYSTEM)
+	: clksig ("clksig",10,SC_NS)	
+	{
+	lp= new loadProgram("loadProgram");
+	lp->clock(clksig);
+	/*lp->outp1(inp1_sig);
+	lp->outp2(inp2_sig);
+	lp->outp3(inp3_sig);
+	lp->inp_vld(inp_vldsig);
+	lp->inp_rdy(inp_rdysig);*/	
 	
-	for(unsigned int arrIterate=0 ; arrIterate < (sizeof(sys.reg.storage_array)/sizeof(*sys.reg.storage_array)) ; arrIterate++) 
-		reg.storage_array[arrIterate]=0;	//Initially store 0 to all elements of Registers
+
+	alu1= new ALU("ALUREADY");
+	alu1->clock(clksig);
+	/*alu1->inp1(inp1_sig);
+	alu1->inp2(inp2_sig);
+	alu1->inp3(inp3_sig);
+	alu1->inp_vld(inp_vldsig);
+	alu1->inp_rdy(inp_rdysig);*/
 	
-	FILE *fileptr; //File Pointer
-	if(argsfile[1] == NULL || (fileptr = fopen(argsfile[1], "r")) == NULL) {	//Input the fileName in argument 1
-		cout<<"Please put a filename in argument :" <<argc<<endl;
-		return 0;
 	}
-	if(fileptr == NULL){	
-		cout<<"Can't opening file.\n"; 
-		return 0;
-	}
 
-	loadProgram lp(argsfile[1]);	//Creating object of loadProgram class and passing filename to parameterized constructor
-	//sys.performOperation(lp);		//function call for implementing all Operations
-	cout<<endl;
-	
-	sc_start();
 
-	cout<<"Specific Statement (For listing 4) :"<<endl;
-	cout<<"For Fibonacci Series(011235..) given in listing 4 Output is stored in R5 according to ASCII_File.asm(.txt): Value is: "<<reg.storage_array[5]<<" for n = "<<reg.storage_array[0]<<endl<<endl;
-	
-	return 0;
-}
+
+
+};
+
+
+
+
+
+int sc_main (int argc, char* argv[]) {
+
+
+SYSTEM s1("SYSTEM");
+sc_start();
+return 0;
+        }
+

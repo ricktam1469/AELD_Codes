@@ -27,12 +27,12 @@ SC_MODULE(ALU) {
 	int *register_location;	//Access to Registers class instances 
 	//Registers reg;
 
-	SC_CTOR(ALU)
+	SC_CTOR(ALU):registers("REG")
 	{
 		//registers=reg;
 		//register_location=registers.storage_array;
-		//SC_CTHREAD(execute,clock.pos());
-		SC_METHOD(execute);
+		SC_CTHREAD(execute,clock.pos());
+		//SC_METHOD(execute);
 	}
 		
 
