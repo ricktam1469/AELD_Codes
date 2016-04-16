@@ -1,0 +1,37 @@
+#include <iostream>
+#include "ALU.hpp"
+
+int ALU::execute(Operation operation){
+	
+	op0=*(register_location);
+	op1=*(register_location+1);
+cout<<op0<<"--->"<<op1;
+	switch(operation){
+	
+		case 0 : return op0+op1;
+			 
+		case 1 : return op0-op1;
+			 
+		case 2 : return op0*op1;
+			 
+		case 3 : return op0/op1;
+			 
+		case 4 : if(op0>op1){
+				cout<<"Operand op0 is greater then Operand op1 (op0>op1) \nAnswer is: ";
+				return 1;
+			 }
+			 else if(op0==op1){
+				cout<<"Oprand op0 and op1 are equal(op0=op1)\nAnswer is: ";
+				return 0;
+			 }
+			 else{
+				cout<<"Operand op0 is less then Operand op1 (op0<op1) \nAnswer is: ";
+				return -1;
+			 }
+			 
+		default: cout<<"Check Enumeration\n";
+			 break;
+	}
+	return 0;
+}
+

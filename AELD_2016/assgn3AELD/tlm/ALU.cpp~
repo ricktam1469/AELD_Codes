@@ -1,0 +1,85 @@
+#include "ALU.h"
+#include <systemc.h>
+
+void ALU::execute(){
+inp_rdy.write(0);
+
+
+
+while( true ){
+int *ptrre;
+int *ptrim;
+inp_rdy.write(1);
+
+do{
+wait();
+} while(!inp_vld.read());
+
+oppp=inp1.read();
+ptrim=inp3.read();
+ptrre=inp2.read();
+
+inp_rdy.write(0);
+
+
+int op0,op1;
+  if(oppp==ADD)
+	{
+cout<< "in ADD"<<endl;
+	op0=*ptrre;
+	op1=*ptrim;
+
+	*ptrre=op0+op1;
+		wait(4);
+	
+	}
+
+  if(oppp==SUB)
+        {
+cout <<"in sub"<<endl;
+             op0=*ptrre;
+            op1=*ptrim;
+	    
+            *ptrre=op0-op1;
+		wait(5);
+
+        }
+
+    if(oppp==MUL)
+
+        {
+             op0=*ptrre;
+            cout <<"in MUL"<<endl;
+            op1=*ptrim;
+	       *ptrre=op0*op1;
+	wait(10);
+
+
+        }
+
+
+    if(oppp==DIV)
+        {
+             op0=*ptrre;
+            op1=*ptrim;
+	    wait();
+            *ptrre=op0/op1;
+
+        }
+
+    if(oppp==CMP)
+        {
+            op0=*ptrre;
+            op1=*ptrim;
+	    wait();
+             if(*ptrre==*ptrim)
+                Z=1;
+            if(*ptrre!=*ptrim)
+                Z=0;
+
+
+
+        }
+
+}}
+

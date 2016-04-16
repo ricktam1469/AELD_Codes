@@ -1,0 +1,18 @@
+CC =  g++ -c -I. -I/usr/local/systemc-2.3.1/include -L. -L/usr/local/systemc-2.3.1/lib-linux -Wl,-rpath=/usr/local/systemc-2.3.1/lib-linux -lsystemc -lm
+CC1 = g++ -I. -I/usr/local/systemc-2.3.1/include -L. -L/usr/local/systemc-2.3.1/lib-linux -Wl,-rpath=/usr/local/systemc-2.3.1/lib-linux -lsystemc -lm
+
+
+
+tlm: main.cpp ALU.o Combiner.hpp LoadProgram.h  
+	$(CC1)  ALU.o main.cpp -o tlm1
+
+
+
+ALU.o:	ALU.cpp 
+	$(CC) ALU.cpp
+
+
+
+	
+clean:
+	rm -rf *o tlm1

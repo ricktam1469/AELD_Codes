@@ -1,0 +1,33 @@
+#ifndef ALU_HPP
+#define ALU_HPP
+
+#include <iostream>
+
+using namespace std;
+
+typedef enum {ADD,SUB,MUL,DIV,CMP} Operation;
+
+class Registers {
+
+	public :
+		int storage_array[16];
+		
+};
+class ALU {
+
+	public :
+		int op0;
+		int op1;
+		int *register_location;
+		int execute(Operation operation) ;
+		Registers registers;
+		ALU(Registers reg) {
+			registers=reg;
+			register_location=registers.storage_array;
+		}
+
+};
+
+
+
+#endif
